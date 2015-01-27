@@ -1,2 +1,2 @@
-# ssh-chat-bot
+# lovelace
 Python chatbot for ssh-chat
