@@ -9,7 +9,7 @@ import traceback
 k = paramiko.RSAKey(filename='bot_key')
 #t = paramiko.Transport(('skynet.mynameiser.in',2022))
 t = paramiko.Transport(('chat.shazow.net',22))
-t.connect(username='lanabot', pkey=k)
+t.connect(username='lovelace', pkey=k)
 chan = t.open_session()
 chan.get_pty(term='xterm-256color',width=80,height=25)
 chan.invoke_shell()
@@ -47,6 +47,10 @@ def parseLine(str):
     print 'PM: '+str
     base = base[9:]
     msg = [ 'pm', base[0:base.find(']')], base[base.find(' ')+1:] ]
+  elif head == '-> ': #system/fingerprint
+    print 'Fingerprint: '+str
+    base = base[3:]
+    msg = [ 'fingerprint', base[0:base.find(' ')], base[base.find(' ')+4:] ]
   elif not head.startswith('['): #chat
     print 'Chat: '+str
     msg = [ 'chat', base[0:base.find(':')], base[base.find(' ')+1:] ]
@@ -79,7 +83,7 @@ def parseLine(str):
 
           if load:
             load_failed.append(name)
-            plugs.load(name)
+            plugs.load(name,chan)
             load_failed.remove(name)
 
           success.append(name)

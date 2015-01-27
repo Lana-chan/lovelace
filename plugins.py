@@ -17,7 +17,7 @@ class UserError(StandardError):
   pass
 
 class Plugin(object):
-  def __init__(self, name):
+  def __init__(self, name, c):
     self.name = name
     self.success = False
 
@@ -27,7 +27,7 @@ class Plugin(object):
     # Call init function
     if hasattr(self.module, '_init'):
       try:
-        self.module._init()
+        self.module._init(c)
       except Exception, e:
         self.unload()
         raise e
@@ -41,12 +41,12 @@ class PluginManager(object):
   def __init__(self):
     self.plugins = {}
 
-  def load(self, name):
+  def load(self, name, c):
     if name in self.plugins:
       raise ScriptError('Plugin {0} already loaded'.format(name))
 
     # This may throw an exception, caller should catch it
-    plug = Plugin(name)
+    plug = Plugin(name, c)
     self.plugins[name] = plug
 
   def unload(self, name):
