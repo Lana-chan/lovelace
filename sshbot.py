@@ -26,13 +26,14 @@ def isAdmin(user):
   return False
   
 def print_error(info):
-	print("----- BEGIN -----")
-	traceback.print_exception(info[0], info[1], info[2])
-	print("-----  END  -----")
+  print("----- BEGIN -----")
+  traceback.print_exception(info[0], info[1], info[2])
+  print("-----  END  -----")
 
 # the parsing is dumb, what are you gonna do about it
 # (hopefully fork and improve)
 def parseLine(str):
+  global chan
   base = deColor.sub('',str)
   head = base[0:3]
   msg = ['','','','']
