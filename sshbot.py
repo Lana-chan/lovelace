@@ -108,8 +108,7 @@ def parseLine(str):
       #c.privmsg(e.target, ' - '.join(message_bits))
       chan.sendall(' - '.join(message_bits)+'\r')
   else:
-    plugs.dispatch_event(chan, msg[0], msg[1:])
-  #todo: send to plugins
+    plugs.dispatch_event(msg[0], msg[1:])
 
 buf = ''
 

@@ -23,11 +23,12 @@ class Plugin(object):
 
     # This may throw an exception, caller should catch it
     self.module = __import__(name)
+    self.module.chan = c
 
     # Call init function
     if hasattr(self.module, '_init'):
       try:
-        self.module._init(c)
+        self.module._init()
       except Exception, e:
         self.unload()
         raise e
@@ -56,13 +57,13 @@ class PluginManager(object):
     self.plugins[name].unload()
     del self.plugins[name]
 
-  def dispatch_event(self, c, name, *args):
+  def dispatch_event(self, name, *args):
     for plugname, plugin in self.plugins.iteritems():
       if hasattr(plugin.module, name):
         f = getattr(plugin.module, name)
 
         try:
-          f(c, *args)
+          f(*args)
         except Exception, exc:
           print('----- Error in {0} -----'.format(plugname))
           print_error(sys.exc_info())
