@@ -10,10 +10,10 @@ def print_error(info):
 
 # Am I even supposed to subclass StandardError??
 # dunno, don't care
-class ScriptError(StandardError):
+class ScriptError(Exception):
   pass
 
-class UserError(StandardError):
+class UserError(Exception):
   pass
 
 class Plugin(object):
@@ -29,7 +29,7 @@ class Plugin(object):
     if hasattr(self.module, '_init'):
       try:
         self.module._init()
-      except Exception, e:
+      except Exception as e:
         self.unload()
         raise e
 
@@ -58,12 +58,12 @@ class PluginManager(object):
     del self.plugins[name]
 
   def dispatch_event(self, name, *args):
-    for plugname, plugin in self.plugins.iteritems():
+    for plugname, plugin in self.plugins.items():
       if hasattr(plugin.module, name):
         f = getattr(plugin.module, name)
 
         try:
           f(*args)
-        except Exception, exc:
+        except Exception as exc:
           print('----- Error in {0} -----'.format(plugname))
           print_error(sys.exc_info())

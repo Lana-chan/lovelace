@@ -89,7 +89,7 @@ def parseLine(str):
 
           success.append(name)
 
-        except StandardError, exc:
+        except StandardError:
           print_error(sys.exc_info())
       message_bits = []
       if success:
@@ -115,7 +115,7 @@ buf = ''
 while True: #like it's 1999
   #receive incoming lines
   if chan.recv_ready():
-    buf = buf + chan.recv(255) #fill buffer with incoming data
+    buf = buf + chan.recv(255).decode('UTF-8') #fill buffer with incoming data
     lines = re.split('\r\n', buf) #separate lines from it
     if len(lines) >= 1: #we have a full line
       for index in range(len(lines)-1): #since it splits at newline, last index is always incommplete/empty
