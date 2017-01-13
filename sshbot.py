@@ -24,7 +24,7 @@ plugs = plugins.PluginManager()
 def isAdmin(user):
   if user == 'Lana': return True
   return False
-  
+
 def print_error(info):
   print("----- BEGIN -----")
   traceback.print_exception(info[0], info[1], info[2])
@@ -39,21 +39,21 @@ def parseLine(str):
   msg = ['','','','']
   #print head
   if head == ' * ': #part/join
-    print 'System: '+str
+    print('System: '+str)
   elif head == '** ': #emote
-    print 'Emote: '+str
+    print('Emote: '+str)
     base = base[3:]
     msg = [ 'emote', base[0:base.find(' ')], base[base.find(' ')+1:] ]
   elif head == '[PM': #pm
-    print 'PM: '+str
+    print('PM: '+str)
     base = base[9:]
     msg = [ 'pm', base[0:base.find(']')], base[base.find(' ')+1:] ]
   elif head == '-> ': #system/fingerprint
-    print 'Fingerprint: '+str
+    print('Fingerprint: '+str)
     base = base[3:]
     msg = [ 'fingerprint', base[0:base.find(' ')], base[base.find(' ')+4:] ]
   elif not head.startswith('['): #chat
-    print 'Chat: '+str
+    print('Chat: '+str)
     msg = [ 'chat', base[0:base.find(':')], base[base.find(' ')+1:] ]
 
   #separate cmd and args
